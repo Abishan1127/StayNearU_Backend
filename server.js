@@ -7,12 +7,12 @@ const nodemailer = require("nodemailer");
 
 const bodyParser = require("body-parser");
 
-const paymentRoutes = require("./routes/paymentRoutes");
-const userRoutes = require("./routes/userRoutes");
-const boardingRoutes = require("./routes/boardingRoutes");
-const roomRoutes = require("./routes/roomRoutes");
-const universityRoutes = require("./routes/universityRoutes");
-const bookingRoutes = require("./routes/bookingRoutes")
+const paymentRoutes = require("./src/routes/paymentRoutes");
+const userRoutes = require("./src/routes/userRoutes");
+const boardingRoutes = require("./src/routes/boardingRoutes");
+const roomRoutes = require("./src/routes/roomRoutes");
+const universityRoutes = require("./src/routes/universityRoutes");
+const bookingRoutes = require("./src/routes/bookingRoutes")
 
 dotenv.config();
 
