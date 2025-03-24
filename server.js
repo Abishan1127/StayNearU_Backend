@@ -24,7 +24,7 @@ app.use(cors({
   credentials: true, 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
 }));
-
+console.log(process.env.FE_URL, process.env.ADMIN_URL);
 app.use(express.json()); 
 app.use(cookieParser()); 
 app.use(bodyParser.json());
