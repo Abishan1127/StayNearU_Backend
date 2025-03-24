@@ -4,7 +4,6 @@ const path = require("path");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const nodemailer = require("nodemailer");
-
 const bodyParser = require("body-parser");
 
 const paymentRoutes = require("./src/routes/paymentRoutes");
@@ -12,25 +11,45 @@ const userRoutes = require("./src/routes/userRoutes");
 const boardingRoutes = require("./src/routes/boardingRoutes");
 const roomRoutes = require("./src/routes/roomRoutes");
 const universityRoutes = require("./src/routes/universityRoutes");
-const bookingRoutes = require("./src/routes/bookingRoutes")
+const bookingRoutes = require("./src/routes/bookingRoutes");
 
 dotenv.config();
 
 const app = express();
 
-//  Enable CORS with Cookies
+// ✅ Allowed origins list
+const allowedOrigins = [
+  "http://localhost:5174",
+  "http://localhost:5173",
+  process.env.FE_URL,
+  process.env.ADMIN_URL
+].filter(Boolean); // Remove undefined/null
+
+// ✅ Enable CORS with specific origin check
 app.use(cors({
-  origin: ["http://localhost:5174", "http://localhost:5173", process.env.FE_URL, process.env.ADMIN_URL],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (e.g., curl, mobile apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS: " + origin));
+    }
+  },
   credentials: true
 }));
-console.log(process.env.FE_URL, process.env.ADMIN_URL);
-app.use(express.json()); 
-app.use(cookieParser()); 
+
+// ✅ Handle preflight
+app.options("*", cors());
+
+app.use(express.json());
+app.use(cookieParser());
 app.use(bodyParser.json());
 
-// Serve uploaded images
+// ✅ Serve uploaded images
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
+// ✅ API Routes
 app.use("/api/book", bookingRoutes);
 app.use("/api/boarding", boardingRoutes);
 app.use("/api/room", roomRoutes);
@@ -38,6 +57,7 @@ app.use("/api/universities", universityRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/payments", paymentRoutes);
 
+// ✅ Email route
 app.post("/send-email", async (req, res) => {
   const { name, email, title, message } = req.body;
 
@@ -69,8 +89,8 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-// Start Server
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
