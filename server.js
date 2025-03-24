@@ -47,7 +47,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 // ✅ Serve uploaded images
-app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api/uploads", express.static(path.join(__dirname, "src/uploads")));
 
 // ✅ API Routes
 app.use("/api/book", bookingRoutes);
