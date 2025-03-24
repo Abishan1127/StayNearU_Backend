@@ -67,7 +67,7 @@ exports.loginUser = async (req, res) => {
         });
 
         // Store token in HTTP-Only Cookie (More Secure)
-        res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "none" });
+        res.cookie("token", token, { httpOnly: true, secure: false, sameSite: "strict" });
 
         res.json({ success: true, message: "Login successful!", token });
     } catch (error) {
