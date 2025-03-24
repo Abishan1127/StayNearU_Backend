@@ -20,9 +20,9 @@ const app = express();
 
 //  Enable CORS with Cookies
 app.use(cors({
-  origin: ["http://localhost:5174", "http://localhost:5173", "https://stay-near-u-frontend-kb9z.vercel.app/", "https://stay-near-u-admin.vercel.app/"],
-  credentials: true
-  // methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+  origin: "https://stay-near-u-frontend-kb9z.vercel.app/",
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
 }));
 console.log(process.env.FE_URL, process.env.ADMIN_URL);
 app.use(express.json()); 
