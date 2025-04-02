@@ -1,5 +1,5 @@
 const db = require("../config/db");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt js");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
